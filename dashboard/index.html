@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — pre-token protocols ranked by implied launch value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <h1>Token Launch Radar</h1>
+        <p class="tagline">Protocols that record no token yet, ranked by the launch value their TVL would support — and how to farm each one before it lists.</p>
+      </div>
+    </div>
+    <dl class="stats" id="stats"></dl>
+  </div>
+</header>
+
+<section class="method" id="method">
+  <h2>How the radar values a launch</h2>
+  <div class="method-grid" id="method-body"></div>
+  <p class="honesty">Honesty note: “records no token” means the snapshot's record carries no market cap, CoinGecko id or symbol for the protocol — it is a statement about the record, not a guarantee that no token exists anywhere. Every implied value is this radar's own estimate from the snapshot's figures, not a prediction that a token will launch, and not a promise of any airdrop.</p>
+</section>
+
+<nav class="tabs" aria-label="Views">
+  <button type="button" class="tab is-active" data-tab="board">Launch board</button>
+  <button type="button" class="tab" data-tab="live">Live peers (the yardsticks)</button>
+</nav>
+
+<section class="controls" aria-label="Filters">
+  <label class="ctl ctl-search">Search
+    <input type="search" id="f-q" placeholder="Protocol name or slug…">
+  </label>
+  <label class="ctl">Category
+    <select id="f-category"></select>
+  </label>
+  <label class="ctl">Chain
+    <select id="f-chain"></select>
+  </label>
+  <label class="ctl">Min TVL
+    <select id="f-tvl">
+      <option value="0">Any size</option>
+      <option value="10000000">$10M+</option>
+      <option value="50000000">$50M+ (watchlist floor)</option>
+      <option value="250000000">$250M+</option>
+      <option value="1000000000">$1B+</option>
+    </select>
+  </label>
+  <label class="ctl ctl-check">
+    <input type="checkbox" id="f-watch"> Watchlist only
+  </label>
+  <span class="ctl-count" id="row-count" role="status"></span>
+</section>
+
+<main>
+  <div class="table-wrap" id="board-wrap">
+    <p class="hint">Click a column heading to re-sort the sweep. Click any protocol row for its value breakdown and its step-by-step farm plan.</p>
+    <table class="board" id="board-table">
+      <thead>
+        <tr>
+          <th data-sort="rank" class="num">Rank</th>
+          <th data-sort="name">Protocol</th>
+          <th data-sort="category">Category</th>
+          <th data-sort="tvl_usd" class="num">TVL</th>
+          <th data-sort="change_7d" class="num">7d change</th>
+          <th data-sort="multiple" class="num">Peer multiple</th>
+          <th data-sort="implied_value_usd" class="num">Implied value</th>
+          <th data-sort="age_days" class="num">Age</th>
+        </tr>
+      </thead>
+      <tbody id="board-body"></tbody>
+    </table>
+  </div>
+
+  <div class="table-wrap is-hidden" id="live-wrap">
+    <p class="live-note">These protocols already trade. The radar never ranks them — it uses their market-cap/TVL ratios, category by category, as the yardsticks for the board above. Values below are the market's own, read from the same snapshot.</p>
+    <table class="board" id="live-table">
+      <thead>
+        <tr><th>Protocol</th><th>Category</th><th class="num">TVL</th><th class="num">Market cap</th><th class="num">MCap / TVL</th><th class="num">7d change</th></tr>
+      </thead>
+      <tbody id="live-body"></tbody>
+    </table>
+  </div>
+</main>
+
+<aside class="drawer is-hidden" id="drawer" aria-label="Protocol detail">
+  <button type="button" class="drawer-close" id="drawer-close" aria-label="Close detail">×</button>
+  <div id="drawer-body"></div>
+</aside>
+<div class="scrim is-hidden" id="scrim"></div>
+
+<footer class="foot">
+  <p id="foot-line"></p>
+  <p>Implied values are estimates produced by one stated model from one sealed snapshot. Farming any protocol risks the capital it asks for; a position is never a guarantee of an allocation.</p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
