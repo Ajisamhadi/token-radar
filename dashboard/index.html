@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Token Launch Radar — pre-token protocols ranked by implied launch value</title>
+<title>Token Launch Radar — fitted launch values for protocols that record no token</title>
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
@@ -13,17 +13,23 @@
       <span class="brand-mark" aria-hidden="true"></span>
       <div>
         <h1>Token Launch Radar</h1>
-        <p class="tagline">Protocols that record no token yet, ranked by the launch value their TVL would support — and how to farm each one before it lists.</p>
+        <p class="tagline">Protocols that record no token, ranked by a fitted estimate of what a launch would be worth — with the model's out-of-sample error printed on the board, and a costed farm plan for every row.</p>
       </div>
     </div>
-    <dl class="stats" id="stats"></dl>
   </div>
+  <dl class="kpis" id="kpis" aria-label="Key figures"></dl>
 </header>
 
 <section class="method" id="method">
-  <h2>How the radar values a launch</h2>
-  <div class="method-grid" id="method-body"></div>
-  <p class="honesty">Honesty note: “records no token” means the snapshot's record carries no market cap, CoinGecko id or symbol for the protocol — it is a statement about the record, not a guarantee that no token exists anywhere. Every implied value is this radar's own estimate from the snapshot's figures, not a prediction that a token will launch, and not a promise of any airdrop.</p>
+  <div class="method-col">
+    <h2>How the radar values a launch</h2>
+    <div id="method-body"></div>
+  </div>
+  <div class="method-col validation">
+    <h2>Model validation — held-out peers</h2>
+    <div id="validation-body"></div>
+  </div>
+  <p class="honesty">Honesty note: “records no token” describes the snapshot's record — no market cap, CoinGecko id or symbol — not a guarantee that no token exists anywhere. Implied values are this radar's own estimates from the snapshot's figures, not predictions that a token will launch and not promises of any airdrop. Launch odds are a cross-sectional proxy: the share of similar protocols that already record a token. Protocols that have run for years without one may be structurally tokenless, so the top of the odds range deserves the most doubt.</p>
 </section>
 
 <nav class="tabs" aria-label="Views">
@@ -40,6 +46,14 @@
   </label>
   <label class="ctl">Chain
     <select id="f-chain"></select>
+  </label>
+  <label class="ctl">Verdict
+    <select id="f-verdict">
+      <option value="">Any verdict</option>
+      <option value="Farm">Farm</option>
+      <option value="Thin">Thin</option>
+      <option value="Skip">Skip</option>
+    </select>
   </label>
   <label class="ctl">Min TVL
     <select id="f-tvl">
@@ -58,7 +72,7 @@
 
 <main>
   <div class="table-wrap" id="board-wrap">
-    <p class="hint">Click a column heading to re-sort the sweep. Click any protocol row for its value breakdown and its step-by-step farm plan.</p>
+    <p class="hint">Click a column heading to re-sort the sweep. Click any protocol row for its full value breakdown, its launch-odds evidence and its step-by-step farm plan.</p>
     <table class="board" id="board-table">
       <thead>
         <tr>
@@ -66,10 +80,11 @@
           <th data-sort="name">Protocol</th>
           <th data-sort="category">Category</th>
           <th data-sort="tvl_usd" class="num">TVL</th>
-          <th data-sort="change_7d" class="num">7d change</th>
-          <th data-sort="multiple" class="num">Peer multiple</th>
+          <th data-sort="change_7d" class="num">7d</th>
+          <th data-sort="multiple" class="num">Fitted multiple</th>
+          <th data-sort="launch_odds" class="num">Launch odds</th>
           <th data-sort="implied_value_usd" class="num">Implied value</th>
-          <th data-sort="age_days" class="num">Age</th>
+          <th data-sort="verdict">Verdict</th>
         </tr>
       </thead>
       <tbody id="board-body"></tbody>
@@ -77,7 +92,7 @@
   </div>
 
   <div class="table-wrap is-hidden" id="live-wrap">
-    <p class="live-note">These protocols already trade. The radar never ranks them — it uses their market-cap/TVL ratios, category by category, as the yardsticks for the board above. Values below are the market's own, read from the same snapshot.</p>
+    <p class="live-note">These protocols already trade, so the radar never ranks them. Their market-cap/TVL ratios are the yardsticks: the fitted model is a regression over exactly these peers, and the validation panel above reports how that regression scored on peers it was not fitted on. Values below are the market's own, read from the same snapshot.</p>
     <table class="board" id="live-table">
       <thead>
         <tr><th>Protocol</th><th>Category</th><th class="num">TVL</th><th class="num">Market cap</th><th class="num">MCap / TVL</th><th class="num">7d change</th></tr>
@@ -95,7 +110,7 @@
 
 <footer class="foot">
   <p id="foot-line"></p>
-  <p>Implied values are estimates produced by one stated model from one sealed snapshot. Farming any protocol risks the capital it asks for; a position is never a guarantee of an allocation.</p>
+  <p>Every implied value is one stated model's estimate from one sealed snapshot. Farming any protocol risks the capital its plan asks for; a position is never a guarantee of an allocation.</p>
 </footer>
 
 <script src="../data.js"></script>
