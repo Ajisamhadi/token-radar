@@ -23,6 +23,8 @@
 
 * { box-sizing: border-box; }
 
+::selection { background: var(--signal-dim); color: var(--text); }
+
 body {
   margin: 0;
   background: var(--ink);

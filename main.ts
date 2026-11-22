@@ -87,9 +87,10 @@ writeFileSync(
 
 const lead = board[0];
 const v = dash.validation;
+const vc = dash.verdict_counts;
 process.stdout.write(
   `token-radar: ${snapshot.protocols.length} protocols scanned, ${snapshot.watchlist.length} on the watchlist, ` +
-    `${board.length} candidates ranked, ${dash.peer_size} tokenized peers behind the fit\n` +
+    `${board.length} candidates ranked (${vc.Farm} Farm, ${vc.Thin} Thin, ${vc.Skip} Skip), ${dash.peer_size} tokenized peers behind the fit\n` +
     `token-radar: held-out check on ${v.test_peers} unseen peers: median error x${(10 ** v.median_abs_log10_error).toFixed(2)}, ` +
     `${v.within_2x_pct}% within 2x, ${v.within_3x_pct}% within 3x\n` +
     (lead === undefined
